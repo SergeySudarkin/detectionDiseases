@@ -69,11 +69,13 @@ class User(Base):
         DateTime(timezone=True),
         nullable=False,
         server_default=func.now(),
+        onupdate=func.now(),
     )
 
     patient_profile: Mapped["PatientProfile | None"] = relationship(
         "PatientProfile",
         back_populates="user",
         uselist=False,
+        cascade="all, delete-orphan",
         passive_deletes=True,
     )
